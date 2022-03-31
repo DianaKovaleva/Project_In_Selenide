@@ -1,2 +1,8 @@
 # Project exclude paths
 /target/
+*.iml
+*.iws
+*.ipr
+*.zip
+build/
+.idea/

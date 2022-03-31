@@ -1,5 +1,9 @@
-import HelperForAcmeShop.Locators;
-import com.codeborne.selenide.Configuration;
+import HelperForAcmeShop.ScreenshotListener;
+import io.qameta.allure.Description;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import org.testng.Assert;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import pageobjectForAcmeShop.CartPageAcmeShop;
@@ -8,20 +12,23 @@ import pageobjectForAcmeShop.HomePageAcmeShop;
 import pageobjectForAcmeShop.SubcategoryPageAcmeShop;
 import java.util.ArrayList;
 import static com.codeborne.selenide.Condition.attribute;
-import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.title;
 import static org.testng.Assert.assertEquals;
 
+@Listeners({ScreenshotListener.class})
 
-public class AcmeShop extends AcmeShopTestBase {
+@Epic("Automation courses")
+@Feature("Web-site with ducks testing")
+public class TestAcmeShop extends TestBaseAcmeShop {
 
 
     @Test
-    public void ducksShopHeaders() throws Exception {  // Проверка переходов по пунктам меню
+    @Description("Checking the right redirection at the Header's links")
+    public void ducksShopHeaders() throws Exception {
         HomePageAcmeShop homePage = new HomePageAcmeShop(webdriver);
         SoftAssert softAssert = new SoftAssert();
 
+        LOG.info("Checking that we got to the right page");
         homePage.clickRubberDucksHeader();
         String rubberDucksHeaderTitle = homePage.getTitle();
         //$("").shouldHave(text(rubberDucksHeaderTitle)); //не понятно, как в селенид, мы же не просто проверяем наличие текста, а смотрим title
@@ -45,7 +52,8 @@ public class AcmeShop extends AcmeShopTestBase {
 
     }
 
-        @Test //Отработка Actions (положить в корзину и удостовериться, что кол-во отобразилось в ней верное):
+        @Test
+        @Description("Testing the cart and quantity")
         public void addingToCart() throws Exception {
             HomePageAcmeShop homePage = new HomePageAcmeShop(webdriver);
             CartPageAcmeShop cartPage = new CartPageAcmeShop(webdriver);
@@ -68,14 +76,17 @@ public class AcmeShop extends AcmeShopTestBase {
         cartPage.clickUpdateInCart();
 
             //Проверяем, отобразилось ли в корзине правильное количество(3)
+        LOG.info("Checking the right number in the cart");
         cartPage.assertRightNumberInCart();
 
             //Проверяем, отобразилось ли правильное количество(3) в таблице ниже
+        LOG.info("Checking the right number in the grid");
         cartPage.assertRightNumberInGrid();
 
     }
 
-        @Test //Сортировка
+        @Test
+        @Description("Sorting")
         public void subcategorySorting () throws Exception {
         HomePageAcmeShop homePage = new HomePageAcmeShop(webdriver);
         SubcategoryPageAcmeShop subcategoryPage = new SubcategoryPageAcmeShop(webdriver);
@@ -87,6 +98,7 @@ public class AcmeShop extends AcmeShopTestBase {
 
         subcategoryPage.clickNameSortingButton();
 
+        LOG.debug("Creation of the array with existing names and its consequence");
         ArrayList<String> allNames = new ArrayList<>();
         String greenDuck = subcategoryPage.getTextOfGreenDuckName();
         allNames.add(greenDuck);
@@ -97,16 +109,19 @@ public class AcmeShop extends AcmeShopTestBase {
         String pinkDuck = subcategoryPage.getTextOfPinkDuckName();
         allNames.add(pinkDuck);
 
+        LOG.debug("Creation of the array with desired names and its consequence");
         ArrayList<String> forNamesComparison = new ArrayList<>();
         forNamesComparison.add("Green DucK");
         forNamesComparison.add("Yellow Duck");
         forNamesComparison.add("Розовая уточка");
 
+        LOG.info("Assertion of the right sorting on names");
         assertEquals(allNames, forNamesComparison);
 
         //Сортировка по цене
         subcategoryPage.clickPriceSortingButton();
 
+        LOG.debug("Cutting the currency sign to get the double");
         String yellowPriceTruncated = subcategoryPage.getTextOfYellowDuckPrice();
         double yellowPriceDouble = Double.parseDouble(yellowPriceTruncated);
 
@@ -116,12 +131,14 @@ public class AcmeShop extends AcmeShopTestBase {
         String pinkPriceTruncated = subcategoryPage.getTextOfPinkDuckPrice();
         double pinkPriceDouble = Double.parseDouble(pinkPriceTruncated);
 
+        LOG.debug("Creation of the array with existing prices and its consequence");
         ArrayList<Double> allPrices = new ArrayList<>();
         allPrices.add(yellowPriceDouble);
         allPrices.add(greenPriceDouble);
         allPrices.add(pinkPriceDouble);
 
         String result;
+        LOG.info("Comparison of prices");
         if (allPrices.get(0) < allPrices.get(1) && allPrices.get(1) < allPrices.get(2)) {
             result = "Sorted";
         } else {
@@ -131,7 +148,8 @@ public class AcmeShop extends AcmeShopTestBase {
         assertEquals(result, "Sorted");
         }
 
-        @Test //Проверка соответствия лэйблов
+        @Test
+        @Description("Right labels checking")
         public void labelsChecking() throws Exception {
         HomePageAcmeShop homePage = new HomePageAcmeShop(webdriver);
         SubcategoryPageAcmeShop subcategoryPage = new SubcategoryPageAcmeShop(webdriver);
@@ -140,6 +158,7 @@ public class AcmeShop extends AcmeShopTestBase {
         homePage.clickSubcategory();
 
         //$(".link[href=\"https://litecart.stqa.ru/en/rubber-ducks-c-1/subcategory-c-2/green-duck-p-2\"] div[class*=\"sticker\"]").shouldHave(text("NEW")); //так тоже не получилось
+        LOG.debug("Getting text of titles and comparison with the expected ones");
         String greenDuckLabelString = subcategoryPage.getTextOfGreenDuckLabel();
         assertEquals(greenDuckLabelString, "NEW");
 
@@ -156,8 +175,9 @@ public class AcmeShop extends AcmeShopTestBase {
         homePage.search("yellow"); //пока просто так, ничего не оцениваем на странице по результатам
         homePage.search("red");
         homePage.search("acme");
-    }
+        Assert.fail("For reports testing");
 
+    }
 
 
   }
