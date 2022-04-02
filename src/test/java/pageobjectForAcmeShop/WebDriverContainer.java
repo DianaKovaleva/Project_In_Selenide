@@ -14,7 +14,7 @@ import java.net.URL;
 
 import static org.openqa.selenium.remote.BrowserType.*;
 
-//!!!пока не используем этот класс
+//!не используем этот класс, только для распределенного запуска
 public class WebDriverContainer {
 
     private static WebDriver webdriver;
@@ -29,9 +29,6 @@ public class WebDriverContainer {
                     break;
                 case FIREFOX:
                     caps.setBrowserName(FIREFOX);
-                    break;
-                case OPERA:
-                    caps.setBrowserName(OPERA);
                     break;
                 default:
                     caps.setBrowserName(CHROME);
