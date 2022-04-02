@@ -1,14 +1,18 @@
+import Enums.Browser;
 import com.codeborne.selenide.AssertionMode;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.WebDriverRunner;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.remote.BrowserType;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
 import static com.codeborne.selenide.Browsers.CHROME;
 import static com.codeborne.selenide.Selenide.closeWebDriver;
 import static com.codeborne.selenide.Selenide.open;
+import static org.openqa.selenium.remote.BrowserType.FIREFOX;
+import static org.openqa.selenium.remote.BrowserType.OPERA;
 
 public class TestBaseAcmeShop {
 
@@ -18,8 +22,17 @@ public class TestBaseAcmeShop {
 
     @BeforeTest
     public void setup() {
+        Browser browser = Browser.valueOf(System.getProperty("browser", Browser.CHROME.toString()));
+        switch (browser) {
+            case CHROME:
+                Configuration.browser = CHROME;
+                break;
+            case FIREFOX:
+                Configuration.browser = FIREFOX;
+                break;
+        }
+
         Configuration.baseUrl = "https://litecart.stqa.ru/en/";
-        Configuration.browser = CHROME;
         Configuration.assertionMode = AssertionMode.SOFT;
         open(Configuration.baseUrl);
         Configuration.pageLoadTimeout = 5000;

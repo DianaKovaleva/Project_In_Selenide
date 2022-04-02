@@ -1,6 +1,7 @@
 package HelperForAcmeShop;
 
 import com.codeborne.selenide.WebDriverRunner;
+import com.epam.reportportal.service.ReportPortal;
 import io.qameta.allure.Allure;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
@@ -9,19 +10,9 @@ import org.testng.ITestListener;
 import org.testng.ITestResult;
 
 import java.io.*;
+import java.util.Calendar;
 
 public class ScreenshotListener implements ITestListener {
-
-//    @Override
-//    public void onTestFailure(ITestResult result){
-//        File screenshot = ((TakesScreenshot)WebDriverRunner.getWebDriver()).getScreenshotAs(OutputType.FILE);
-//        File destFile = new File("C:\\Users\\screenshot.png");
-//        try {
-//            FileUtils.copyFile(screenshot, destFile);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
 
     @Override
     public void onTestFailure(ITestResult result){
@@ -32,6 +23,9 @@ public class ScreenshotListener implements ITestListener {
         }
 
         Allure.addAttachment("Source", "text", getPageSource(), ".html");
+
+        File screenshot = ((TakesScreenshot)WebDriverRunner.getWebDriver()).getScreenshotAs(OutputType.FILE);
+        ReportPortal.emitLog("Screenshot", "ERROR", Calendar.getInstance().getTime(), screenshot);
     }
 
     private static InputStream getScreenshotAsInputStream() throws FileNotFoundException {
