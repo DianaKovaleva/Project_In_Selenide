@@ -30,12 +30,13 @@ public class TestBaseAcmeShop {
             case FIREFOX:
                 Configuration.browser = FIREFOX;
                 break;
+            default: Configuration.browser = CHROME;
         }
 
         Configuration.baseUrl = "https://litecart.stqa.ru/en/";
         Configuration.assertionMode = AssertionMode.SOFT;
         open(Configuration.baseUrl);
-        Configuration.pageLoadTimeout = 5000;
+        Configuration.pageLoadTimeout = 20000;
         WebDriverRunner.getWebDriver().manage().window().maximize();
         webdriver = WebDriverRunner.getWebDriver();
     }
