@@ -22,7 +22,7 @@ public class TestBaseAcmeShop {
 
     @BeforeTest
     public void setup() {
-        Browser browser = Browser.valueOf(System.getProperty("browser", Browser.CHROME.toString()));
+        Browser browser = Browser.valueOf(System.getProperty("browser", Browser.CHROME.toString()).toUpperCase());
         switch (browser) {
             case CHROME:
                 Configuration.browser = CHROME;

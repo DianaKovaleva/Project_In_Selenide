@@ -105,14 +105,14 @@ public class TestAcmeShop extends TestBaseAcmeShop {
         String yellowDuck = subcategoryPage.getTextOfYellowDuckName();
         allNames.add(yellowDuck);
 
-        //String pinkDuck = subcategoryPage.getTextOfPinkDuckName();
-        //allNames.add(pinkDuck);
+        String pinkDuck = subcategoryPage.getTextOfPinkDuckName();
+        allNames.add(pinkDuck);
 
         LOG.debug("Creation of the array with desired names and its consequence");
         ArrayList<String> forNamesComparison = new ArrayList<>();
         forNamesComparison.add("Green DucK");
         forNamesComparison.add("Yellow Duck");
-        //forNamesComparison.add("Розовая уточка");
+        forNamesComparison.add("Розовая уточка");
 
         LOG.info("Assertion of the right sorting on names");
         assertEquals(allNames, forNamesComparison);
