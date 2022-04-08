@@ -9,6 +9,7 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
 import static com.codeborne.selenide.Browsers.CHROME;
+import static com.codeborne.selenide.Browsers.EDGE;
 import static com.codeborne.selenide.Selenide.closeWebDriver;
 import static com.codeborne.selenide.Selenide.open;
 import static org.openqa.selenium.remote.BrowserType.FIREFOX;
@@ -29,6 +30,9 @@ public class TestBaseAcmeShop {
                 break;
             case FIREFOX:
                 Configuration.browser = FIREFOX;
+                break;
+            case EDGE:
+                Configuration.browser = EDGE;
                 break;
             default: Configuration.browser = CHROME;
         }

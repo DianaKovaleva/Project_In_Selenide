@@ -3,7 +3,8 @@ package Enums;
 public enum Browser {
 
     CHROME("chrome"),
-    FIREFOX("firefox");
+    FIREFOX("firefox"),
+    EDGE("edge");
 
     String browserName;
 
