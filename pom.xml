@@ -122,15 +122,13 @@
                             <name>listener</name>
                             <value>com.epam.reportportal.testng.ReportPortalTestNGListener</value>
                         </property>
-
-                        <systemPropertyVariables>
-                            <rp.endpoint>https://demo.reportportal.io</rp.endpoint>
-                            <rp.uuid>dca930ea-ecb3-45f6-b817-dbc7041def6d</rp.uuid>
-                            <rp.launch>AcmeShopTesting</rp.launch>
-                            <rp.project>dianakovaleva_personal</rp.project>
-                        </systemPropertyVariables>
-
                     </properties>
+                    <systemPropertyVariables>
+                        <rp.endpoint>https://demo.reportportal.io</rp.endpoint>
+                        <rp.uuid>dca930ea-ecb3-45f6-b817-dbc7041def6d</rp.uuid>
+                        <rp.launch>AcmeShopTesting</rp.launch>
+                        <rp.project>dianakovaleva_personal</rp.project>
+                    </systemPropertyVariables>
 
                 </configuration>
 
